@@ -5,57 +5,61 @@ import matplotlib.pyplot as plt
 import statistics as st
 import random as rd
 
-"""
-def indicateurs_quali(x):
-
-"""
-def while_liste(variable, txt, liste):
-  variable = input(txt)
-  while variable not in liste:
-    variable = input(txt)
-
-
-
-
-
-def demande(nbr):
-  if nbr == 0:
-    print("Le programme ne vous est pas déstiné.")
-  elif nbr == 1:
-    while_liste("type", 'Type de données entre "quali" & "quanti" : ', ['quali', 'quanti'])
-  else:
-    while_liste("type", 'Type de données entre "quali" & "quanti" : ', ['quali', 'quanti'])
-
-def indicateurs_num(x):
-  mini = min(x)
-  maxi = max(x)
-  mean = st.mean(x)
-  median = st.median(x)
-  sd = st.stdev(x)
-  var = st.variance(x)
-  return(mini, maxi, mean, median, sd, var)
-
-def data_frame_1(x, nom_x, index):
-  name = pd.DataFrame({nom_x : pd.Series(x, index = index)})
-  return(name)
-
-def data_frame_2(x, nom_x, y, nom_y, index):
-  name = pd.DataFrame({nom_x : pd.Series(x, index = index), nom_y : y})
-  return(name)
-
-d = {'X' : pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd']),   'Y' : pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd'])}
+d = {'X' : pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd']),
+    'Y' : [1, 2, 3, 4],
+    'Z' : ['A', 'B', 'C', 'D']}
 df = pd.DataFrame(d)
-plt.plot('X', 'Y', 'cs', data=df)
-plt.show()
-print(df)
-print(indicateurs_num(df.X)[1])
+
+
+def choix_donnees():
+
+  import_ = input("Entrez le chemin du fichier à importer : ")
+  print("Import non réussi donc la suite sera faite avec un data frame déjà créé.")
+ 
+  return (import_)
+
+
+def while_liste(txt, liste, type = ''):
+
+  variable = type(input(txt))
+  while variable not in liste:
+    variable = type(input(txt))
+
+  return(variable)
+
+
+def indicateurs(nom, type):
+  if type == quanti:
+    mini = min(nom)
+   maxi = max(nom)
+   mean = st.mean(nom)
+   median = st.median(nom)
+   sd = st.stdev(nom)
+   var = st.variance(nom)
+  
+  else:
+    print("l")
+
+  return(pd.DataFrame([mini, maxi, mean, median, sd, var], index = ['Min', 'Max', 'Mean', 'Med', 'Sd', 'Var']))
+
+
+def choix():
+  print(" 1 : Afficher données \n 2 : Calculer indicateurs \n 3 : Autres \n Entrez le numéro du choix")
+  action = -1
+  while action != 3:
+    action = while_liste('Que voulez-vous faire : ', range(1, 4), int)
+    if action == 1:
+      print(df)
+    elif action == 2:
+      colonne = while_liste('Nom de colonne sur lequel faire : ', ['X', 'Y'], str)
+      type = while_liste('Type de données entre "quali" & "quanti" : ', ['quali', 'quanti'], str)
+      print(indicateurs(df[colonne], type))
+    else:
+      print("r")
 
 
 # PARTIE UTILISATEUR
 
-while_liste("type", 'Type de données entre "quali" & "quanti" : ', ['quali', 'quanti'])
 
-demande(nbr)
-indi1 = indicateurs_num(df.X)
-indi2 = indicateurs_num(df.Y)
-print(data_frame_2(indi1, "e", indi2, "f", ['Min', 'Max', 'Mean', 'Med', 'Sd', 'Var']))
+donnees = choix_donnees()
+choix()
