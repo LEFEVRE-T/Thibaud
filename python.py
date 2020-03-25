@@ -54,6 +54,13 @@ def barplot(data, x):
   plt.savefig(str("Diagramme en barres de la variable ") + x)
 
 
+def piechart(data, x):
+  data[x].value_counts(normalize = True).plot(kind = 'pie')
+  plt.axis('equal') 
+  plt.title(str("Répartition de la variable ") + x)
+  plt.savefig(str("Diagramme circulaire de la variable ") + x)
+
+
 def realisation(data, choix): # Fonction qui agit en fonction du choix de l'utilisateur
 
   if choix == "1":
@@ -67,38 +74,29 @@ def realisation(data, choix): # Fonction qui agit en fonction du choix de l'util
     scatter(data, axe_x, axe_y)
   elif choix == "4":
     axe_x = while_liste("Nom de colonne pour l'axe x : ", data.columns)
-    barplot(data, axe_x) 
+    barplot(data, axe_x)
+  elif choix == "5":
+    variable = while_liste("Nom de colonne pour la variable : ", data.columns)
+    piechart(data, variable)
   else:
     print("r")
 
 
-# PARTIE UTILISATEUR
-
+#""
 if __name__ == "__main__":
   fichier = pd.read_csv(input("Entrez le nom du fichier à importer : "), sep = ';')
   while True:
-    print('\n 1 : Afficher données \n 2 : Calculer indicateurs \n 3 : Nuage de points \n 4 : Diagramme en barres \n Entrez le numéro du choix \n "exit" pour sortir')
-    action = while_liste('Que voulez-vous faire : ', ["1", "2", "3", "4", "exit"])
+    print('\n 1 : Afficher données \n 2 : Calculer indicateurs \n 3 : Nuage de points \n 4 : Diagramme en barres \n 5 : Diagramme circulaire \n Entrez le numéro du choix \n "exit" pour sortir')
+    action = while_liste('Que voulez-vous faire : ', ["1", "2", "3", "4", "5", "exit"])
     if action == "exit":
       break
     realisation(fichier, action)
 import matplotlib.pyplot as plt
-"""
-# VARIABLE QUALITATIVE
-# Diagramme en secteurs
-data["categ"].value_counts(normalize=True).plot(kind='pie')
-# Cette ligne assure que le pie chart est un cercle plutôt qu'une éllipse
-plt.axis('equal') 
-plt.show() # Affiche le graphique
-
-# Diagramme en tuyaux d'orgues
-data["categ"].value_counts(normalize=True).plot(kind='bar')
-plt.show()
-
+ PARTIE UTILISATEUR
+"
 # Histogramme
 data["montant"].hist(density=True)
 plt.show()
 # Histogramme plus beau
 data[data.montant.abs() < 100]["montant"].hist(density=True,bins=20)
 plt.show()
-"""
