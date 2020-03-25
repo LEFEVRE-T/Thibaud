@@ -43,7 +43,15 @@ def scatter(data, x, y):
   plt.title(x + str(" en fonction de ") + y)
   plt.xlabel(x)
   plt.ylabel(y)
-  plt.savefig("nuage_de_points")
+  plt.savefig(str("Nuage_de_points de ") + x + str(" en fonction de ") + y)
+
+
+def barplot(data, x):
+  data[x].value_counts(normalize = True).plot(kind = 'bar')
+  plt.title(str("Répartition de la variable ") + x)
+  plt.xlabel(x)
+  plt.ylabel("Fréquence")
+  plt.savefig(str("Diagramme en barres de la variable ") + x)
 
 
 def realisation(data, choix): # Fonction qui agit en fonction du choix de l'utilisateur
@@ -57,6 +65,9 @@ def realisation(data, choix): # Fonction qui agit en fonction du choix de l'util
     axe_x = while_liste("Nom de colonne pour l'axe x : ", data.columns)
     axe_y = while_liste("Nom de colonne pour l'axe y : ", data.columns)
     scatter(data, axe_x, axe_y)
+  elif choix == "4":
+    axe_x = while_liste("Nom de colonne pour l'axe x : ", data.columns)
+    barplot(data, axe_x) 
   else:
     print("r")
 
@@ -66,8 +77,28 @@ def realisation(data, choix): # Fonction qui agit en fonction du choix de l'util
 if __name__ == "__main__":
   fichier = pd.read_csv(input("Entrez le nom du fichier à importer : "), sep = ';')
   while True:
-    print('\n 1 : Afficher données \n 2 : Calculer indicateurs \n 3 : Nuage de points \n Entrez le numéro du choix \n "exit" pour sortir')
-    action = while_liste('Que voulez-vous faire : ', ["1", "2", "3", "exit"])
+    print('\n 1 : Afficher données \n 2 : Calculer indicateurs \n 3 : Nuage de points \n 4 : Diagramme en barres \n Entrez le numéro du choix \n "exit" pour sortir')
+    action = while_liste('Que voulez-vous faire : ', ["1", "2", "3", "4", "exit"])
     if action == "exit":
       break
     realisation(fichier, action)
+import matplotlib.pyplot as plt
+"""
+# VARIABLE QUALITATIVE
+# Diagramme en secteurs
+data["categ"].value_counts(normalize=True).plot(kind='pie')
+# Cette ligne assure que le pie chart est un cercle plutôt qu'une éllipse
+plt.axis('equal') 
+plt.show() # Affiche le graphique
+
+# Diagramme en tuyaux d'orgues
+data["categ"].value_counts(normalize=True).plot(kind='bar')
+plt.show()
+
+# Histogramme
+data["montant"].hist(density=True)
+plt.show()
+# Histogramme plus beau
+data[data.montant.abs() < 100]["montant"].hist(density=True,bins=20)
+plt.show()
+"""
