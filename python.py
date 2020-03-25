@@ -38,22 +38,25 @@ def indicateurs(colonne): # Fonction qui calcule des indicateurs
     compter(colonne)
     
 
-def scatter(x, y):
-  plt.scatter(x, y)
+def scatter(data, x, y):
+  plt.scatter(data[x], data[y])
+  plt.title(x + str(" en fonction de ") + y)
+  plt.xlabel(x)
+  plt.ylabel(y)
   plt.savefig("nuage_de_points")
 
 
 def realisation(data, choix): # Fonction qui agit en fonction du choix de l'utilisateur
 
-  if choix == 1:
+  if choix == "1":
     print(data)
-  elif choix == 2:
+  elif choix == "2":
     colonne = while_liste('Nom de colonne sur lequel faire : ', data.columns)
     indicateurs(data[colonne])
-  elif choix == 3:
+  elif choix == "3":
     axe_x = while_liste("Nom de colonne pour l'axe x : ", data.columns)
     axe_y = while_liste("Nom de colonne pour l'axe y : ", data.columns)
-    scatter(data[axe_x], data[axe_y])
+    scatter(data, axe_x, axe_y)
   else:
     print("r")
 
@@ -67,5 +70,4 @@ if __name__ == "__main__":
     action = while_liste('Que voulez-vous faire : ', ["1", "2", "3", "exit"])
     if action == "exit":
       break
-    action = int(action)
     realisation(fichier, action)
