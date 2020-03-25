@@ -39,6 +39,7 @@ def indicateurs(colonne): # Fonction qui calcule des indicateurs
     
 
 def scatter(data, x, y):
+
   plt.scatter(data[x], data[y])
   plt.title(x + str(" en fonction de ") + y)
   plt.xlabel(x)
@@ -47,6 +48,7 @@ def scatter(data, x, y):
 
 
 def barplot(data, x):
+
   data[x].value_counts(normalize = True).plot(kind = 'bar')
   plt.title(str("Répartition de la variable ") + x)
   plt.xlabel(x)
@@ -55,10 +57,20 @@ def barplot(data, x):
 
 
 def piechart(data, x):
+
   data[x].value_counts(normalize = True).plot(kind = 'pie')
   plt.axis('equal') 
   plt.title(str("Répartition de la variable ") + x)
   plt.savefig(str("Diagramme circulaire de la variable ") + x)
+
+
+def hist(data, x):
+
+  data[data[x].abs() < 100][x].hist(density = True, bins=20)
+  plt.title(str("Répartition de la variable ") + x)
+  plt.xlabel(x)
+  plt.ylabel("Fréquence")
+  plt.savefig(str("Histogramme de la variable ") + x)
 
 
 def realisation(data, choix): # Fonction qui agit en fonction du choix de l'utilisateur
@@ -78,25 +90,20 @@ def realisation(data, choix): # Fonction qui agit en fonction du choix de l'util
   elif choix == "5":
     variable = while_liste("Nom de colonne pour la variable : ", data.columns)
     piechart(data, variable)
+  elif choix == "6":
+    variable = while_liste("Nom de colonne pour la variable : ", data.columns)
+    hist(data, variable)
   else:
     print("r")
 
 
-#""
+# PARTIE UTILISATEUR
+
 if __name__ == "__main__":
   fichier = pd.read_csv(input("Entrez le nom du fichier à importer : "), sep = ';')
   while True:
-    print('\n 1 : Afficher données \n 2 : Calculer indicateurs \n 3 : Nuage de points \n 4 : Diagramme en barres \n 5 : Diagramme circulaire \n Entrez le numéro du choix \n "exit" pour sortir')
-    action = while_liste('Que voulez-vous faire : ', ["1", "2", "3", "4", "5", "exit"])
+    print('\n 1 : Afficher données \n 2 : Calculer indicateurs \n 3 : Nuage de points \n 4 : Diagramme en barres \n 5 : Diagramme circulaire \n 6 : Histogramme \n Entrez le numéro du choix \n "exit" pour sortir')
+    action = while_liste('Que voulez-vous faire : ', ["1", "2", "3", "4", "5", "6", "exit"])
     if action == "exit":
       break
     realisation(fichier, action)
-import matplotlib.pyplot as plt
- PARTIE UTILISATEUR
-"
-# Histogramme
-data["montant"].hist(density=True)
-plt.show()
-# Histogramme plus beau
-data[data.montant.abs() < 100]["montant"].hist(density=True,bins=20)
-plt.show()
