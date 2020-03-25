@@ -24,9 +24,9 @@ def compter(donnees): # Fonction qui compte les éléments
   print(compteur)
 
 
-def indicateurs(colonne, type_donnees): # Fonction qui calcule des indicateurs
+def indicateurs(colonne): # Fonction qui calcule des indicateurs
 
-  if type_donnees == "quanti":
+  if colonne.dtypes == "int64":
     mini = min(colonne)
     maxi = max(colonne)
     mean = st.mean(colonne)
@@ -44,8 +44,7 @@ def realisation(data, choix): # Fonction qui agit en fonction du choix de l'util
     print(data)
   elif choix == 2:
     colonne = while_liste('Nom de colonne sur lequel faire : ', fichier.columns)
-    type_donnees = while_liste('Type de données entre "quali" & "quanti" : ', ['quali', 'quanti'])
-    indicateurs(data[colonne], type_donnees)
+    indicateurs(data[colonne])
   else:
     print("r")
 
