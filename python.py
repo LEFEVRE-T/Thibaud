@@ -9,10 +9,10 @@ import collections
 
 # PARTIE CODE
 
-def while_liste(txt, liste, type = str): #Fonction qui permet de ne pas avoir à écrire le while à chaque fois
-    variable = type(input(txt))
+def while_liste(txt, liste, get_user_input = input, type = str): #Fonction qui permet de ne pas avoir à écrire le while à chaque fois
+    variable = type(get_user_input(txt))
     while variable not in liste:
-      variable = type(input(txt))
+      variable = type(get_user_input(txt))
     return(variable)
 
 
@@ -22,14 +22,19 @@ def compter(donnees): # Fonction qui compte les éléments
 
 
 def indicateurs(colonne): # Fonction qui calcule des indicateurs
+    mini = min(colonne)
+    maxi = max(colonne)
+    mean = st.mean(colonne)
+    median = st.median(colonne)
+    sd = st.stdev(colonne)
+    var = st.variance(colonne)  
+    return(pd.DataFrame([mini, maxi, mean, median, sd, var], index = ['Min', 'Max', 'Mean', 'Med', 'Sd', 'Var']))
+
+
+
+def etude(colonne): # Fonction qui choisi l'étude en fonction du type de variable
     if colonne.dtypes == "int64":
-      mini = min(colonne)
-      maxi = max(colonne)
-      mean = st.mean(colonne)
-      median = st.median(colonne)
-      sd = st.stdev(colonne)
-      var = st.variance(colonne)  
-      print(pd.DataFrame([mini, maxi, mean, median, sd, var], index = ['Min', 'Max', 'Mean', 'Med', 'Sd', 'Var']))
+      print(indicateurs(colonne))
     else:
       print(compter(colonne))
     
@@ -74,7 +79,7 @@ def realisation(data, choix): # Fonction qui agit en fonction du choix de l'util
       print(data)
     elif choix == "2":
       colonne = while_liste('\n Nom de colonne sur lequel faire : ', data.columns)
-      indicateurs(data[colonne])
+      etude(data[colonne])
     elif choix == "3":
       axe_x = while_liste("\n Nom de colonne pour l'axe x : ", data.columns)
       axe_y = while_liste("Nom de colonne pour l'axe y : ", data.columns)
@@ -92,12 +97,21 @@ def realisation(data, choix): # Fonction qui agit en fonction du choix de l'util
       print("r")
 
 
+class fake_input:
+    def __init__(self, saisies):
+        self._iter = iter(saisies)
+
+    def __call__(self, *args):
+        print(args)
+        return next(self._iter)
+
+
 # PARTIE UTILISATEUR
 
 if __name__ == "__main__":
   fichier = pd.read_csv(input("Entrez le nom du fichier à importer : "), sep = ';')
   while True:
-    print('\n 1 : Afficher données \n 2 : Calculer indicateurs \n 3 : Nuage de points \n 4 : Diagramme en barres \n 5 : Diagramme circulaire \n 6 : Histogramme \n Entrez le numéro du choix ou "exit" pour sortir')
+    print('\n 1 : Afficher données \n 2 : Étude descriptive \n 3 : Nuage de points \n 4 : Diagramme en barres \n 5 : Diagramme circulaire \n 6 : Histogramme \n Entrez le numéro du choix ou "exit" pour sortir')
     action = while_liste('\n Que voulez-vous faire : ', ["1", "2", "3", "4", "5", "6", "exit"])
     if action == "exit":
       break
