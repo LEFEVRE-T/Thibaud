@@ -39,7 +39,7 @@ def indicateurs(colonne): # Fonction qui calcule des indicateurs
     
 
 def scatter(x, y):
-  plt.plot(x, y)
+  plt.scatter(x, y)
   plt.savefig("nuage_de_points")
 
 
@@ -52,8 +52,8 @@ def realisation(data, choix): # Fonction qui agit en fonction du choix de l'util
     indicateurs(data[colonne])
   elif choix == 3:
     axe_x = while_liste("Nom de colonne pour l'axe x : ", data.columns)
-    axe_x = while_liste("Nom de colonne pour l'axe x : ", data.columns)
-    scatter(axe_x, axe_y)
+    axe_y = while_liste("Nom de colonne pour l'axe y : ", data.columns)
+    scatter(data[axe_x], data[axe_y])
   else:
     print("r")
 
