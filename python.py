@@ -79,3 +79,7 @@ def choix():
 
 donnees = choix_donnees()
 choix()
+
+mon_fichier = open("fichier.txt", "r")
+contenu = mon_fichier.read()
+print(contenu)
