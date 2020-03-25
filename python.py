@@ -9,17 +9,11 @@ import collections
 
 # PARTIE CODE
 
-d = {'X' : pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd']),
-    'Y' : [1, 2, 3, 4],
-    'Z' : ['A', 'B', 'C', 'D']}
-df = pd.DataFrame(d)
-
 def choix_donnees(): # Fonction pour l'import des données
 
-  import_ = input("Entrez le chemin du fichier à importer : ")
-  print("Import non réussi donc la suite sera faite avec un data frame déjà créé.")
+  fichier = pd.read_csv(input("Entrez le nom du fichier à importer : "), sep = ';')
  
-  return (import_)
+  return (fichier)
 
 
 def while_liste(txt, liste, type = str): #Fonction qui permet de ne pas avoir à écrire le while à chaque fois
@@ -31,39 +25,39 @@ def while_liste(txt, liste, type = str): #Fonction qui permet de ne pas avoir à
   return(variable)
 
 
-def compter(data): # Fonction qui compte les éléments
+def compter(donnees): # Fonction qui compte les éléments
   
-  compteur = collections.Counter(data)
+  compteur = collections.Counter(donnees)
   print(compteur)
 
 
-def indicateurs(colonne, type_donnees): # Fonction qui calcule des indicateurs
+def indicateurs(data): # Fonction qui calcule des indicateurs
 
+  colonne = while_liste('Nom de colonne sur lequel faire : ', data.columns)
+  type_donnees = while_liste('Type de données entre "quali" & "quanti" : ', ['quali', 'quanti'])
   if type_donnees == "quanti":
-    mini = min(colonne)
-    maxi = max(colonne)
-    mean = st.mean(colonne)
-    median = st.median(colonne)
-    sd = st.stdev(colonne)
-    var = st.variance(colonne)  
+    mini = min(data[colonne])
+    maxi = max(data[colonne])
+    mean = st.mean(data[colonne])
+    median = st.median(data[colonne])
+    sd = st.stdev(data[colonne])
+    var = st.variance(data[colonne])  
     print(pd.DataFrame([mini, maxi, mean, median, sd, var], index = ['Min', 'Max', 'Mean', 'Med', 'Sd', 'Var']))
   else:
-    compter(colonne)
+    compter(data[colonne])
     
 
 def realisation(data, choix): # Fonction qui agit en fonction du choix de l'utilisateur
 
   if choix == 1:
-    print(df)
+    print(donnees)
   elif choix == 2:
-    colonne = while_liste('Nom de colonne sur lequel faire : ', ['X', 'Y', 'Z'])
-    type_donnees = while_liste('Type de données entre "quali" & "quanti" : ', ['quali', 'quanti'])
-    indicateurs(df[colonne], type_donnees)
+    indicateurs(data)
   else:
     print("r")
 
 
-def choix(): # Fonction qui fait choisir à l'utilisateur l'action à réaliser
+def choix(donnees): # Fonction qui fait choisir à l'utilisateur l'action à réaliser
 
   while True:
     print('\n 1 : Afficher données \n 2 : Calculer indicateurs \n 3 : Autres \n Entrez le numéro du choix \n "exit" pour sortir')
@@ -71,17 +65,11 @@ def choix(): # Fonction qui fait choisir à l'utilisateur l'action à réaliser
     if action == "exit":
       break
     action = int(action)
-    realisation(df, action)
+    realisation(donnees, action)
 
 
 # PARTIE UTILISATEUR
 
 if __name__ == "__main__":
   donnees = choix_donnees()
-  choix()
-
-"""
-mon_fichier = open("fichier.txt", "r")
-contenu = mon_fichier.read()
-print(contenu)
-"""
+  choix(donnees)
