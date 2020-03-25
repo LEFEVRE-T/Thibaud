@@ -38,13 +38,22 @@ def indicateurs(colonne): # Fonction qui calcule des indicateurs
     compter(colonne)
     
 
+def scatter(x, y):
+  plt.plot(x, y)
+  plt.savefig("nuage_de_points")
+
+
 def realisation(data, choix): # Fonction qui agit en fonction du choix de l'utilisateur
 
   if choix == 1:
     print(data)
   elif choix == 2:
-    colonne = while_liste('Nom de colonne sur lequel faire : ', fichier.columns)
+    colonne = while_liste('Nom de colonne sur lequel faire : ', data.columns)
     indicateurs(data[colonne])
+  elif choix == 3:
+    axe_x = while_liste("Nom de colonne pour l'axe x : ", data.columns)
+    axe_x = while_liste("Nom de colonne pour l'axe x : ", data.columns)
+    scatter(axe_x, axe_y)
   else:
     print("r")
 
@@ -54,7 +63,7 @@ def realisation(data, choix): # Fonction qui agit en fonction du choix de l'util
 if __name__ == "__main__":
   fichier = pd.read_csv(input("Entrez le nom du fichier à importer : "), sep = ';')
   while True:
-    print('\n 1 : Afficher données \n 2 : Calculer indicateurs \n 3 : Autres \n Entrez le numéro du choix \n "exit" pour sortir')
+    print('\n 1 : Afficher données \n 2 : Calculer indicateurs \n 3 : Nuage de points \n Entrez le numéro du choix \n "exit" pour sortir')
     action = while_liste('Que voulez-vous faire : ', ["1", "2", "3", "exit"])
     if action == "exit":
       break
