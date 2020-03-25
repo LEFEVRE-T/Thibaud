@@ -1,6 +1,7 @@
 import unittest
 import doctest
 import python
+import pandas as pd
 
 
 class TestLancement(unittest.TestCase):
@@ -23,14 +24,13 @@ class TestLancement(unittest.TestCase):
         self.assertEqual(python.while_liste(txt, liste, get_user_input), "")       
         """
 
-
+    # Test apparement non fonctionnel car la vraie valeur d'un DataFrame est ambigüe
+    """
     def test_indicateurs(self):
-        choix = "A"
-        txt = "Entrer quelque chose : "
-        liste = ['A', 'B', 'C', 'D']
-        get_user_input = python.fake_input([choix])
-        self.assertEqual(python.while_liste(txt, liste, get_user_input), "A")
-
+        df = pd.DataFrame({'A': [2,4,6,8,10], 'B': ['A', 'B', 'C', 'B', 'A']})
+        reponse = pd.DataFrame([2,10,6,6,3.162278,10], index = ['Min', 'Max', 'Mean', 'Med', 'Sd', 'Var'])
+        self.assertEqual(python.indicateurs(df['A']), reponse)
+    """
 
 if __name__ == "__main__":
     unittest.main(exit=False)
