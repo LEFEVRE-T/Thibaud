@@ -24,7 +24,7 @@ class TestLancement(unittest.TestCase):
         self.assertEqual(python.while_liste(txt, liste, get_user_input), "")       
         """
 
-    # Test apparement non fonctionnel car la vraie valeur d'un DataFrame est ambigüe
+    # Test apparement non fonctionnel car la vraie valeur d'un DataFrame est ambigüe ; du coup je n'ai pas mis le test pour les     autres fonctions
     """
     def test_indicateurs(self):
         df = pd.DataFrame({'A': [2,4,6,8,10], 'B': ['A', 'B', 'C', 'B', 'A']})

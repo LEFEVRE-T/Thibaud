@@ -90,6 +90,11 @@ def add_col(data, colonne1, colonne2, new_col, choix):
     return data
 
 
+def sub_col(data, colonne):
+    del data[colonne]
+    return(data)
+
+
 def realisation(data, choix): # Fonction qui agit en fonction du choix de l'utilisateur
     if choix == "1":
       print(data)
@@ -117,6 +122,9 @@ def realisation(data, choix): # Fonction qui agit en fonction du choix de l'util
       colonne2 = while_liste("\n Nom de la deuxième colonne : ", data.columns)
       print(add_col(data, data[colonne1], data[colonne2], new_col, action))
     elif choix == "8":
+      colonne_sup = while_liste("\n Nom de la colonne : ", data.columns)
+      print(sub_col(data, colonne_sup))
+    elif choix == "9":
       nom_fichier = input("Nom du fichier : ")
       separateur_fichier = input("Séparateur : ")
       data.to_csv(nom_fichier, sep = separateur_fichier)
@@ -139,7 +147,7 @@ if __name__ == "__main__":
   separateur = input("Séparateur : ")
   fichier = pd.read_csv(donnees, sep = separateur)
   while True:
-    print('\n 1 : Afficher données \n 2 : Étude descriptive \n 3 : Nuage de points \n 4 : Diagramme en barres \n 5 : Diagramme circulaire \n 6 : Histogramme \n 7 : Ajouter colonne \n 8 : Exporter données \n Entrez le numéro du choix ou "exit" pour sortir')
+    print('\n 1 : Afficher données \n 2 : Étude descriptive \n 3 : Nuage de points \n 4 : Diagramme en barres \n 5 : Diagramme circulaire \n 6 : Histogramme \n 7 : Ajouter colonne \n 8 : Supprimer colonne \n 9 : Exporter données \n Entrez le numéro du choix ou "exit" pour sortir')
     action = while_liste('\n Que voulez-vous faire : ', ["1", "2", "3", "4", "5", "6", "7", "8", "exit"])
     if action == "exit":
       break
