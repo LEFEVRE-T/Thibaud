@@ -140,39 +140,60 @@ def pairs(liste):
 
 def ajout4(liste):
 
-    new_liste = liste.append(4)
+    new_liste = liste + [4]
     return new_liste
 
 
 def to_strings(dictionnaire):
     liste = []
-    for clé, valeur in dictionnaire.iteritems():
-        liste.append(clé, ':', valeur)
+    for clé, valeur in dictionnaire.items():
+        liste += [str(clé) + ':' + str(valeur)]
     return liste
 
 
 def extremites(liste):
     extremes = []
-    extremes[0] = liste[0]
-    extremes[1] = liste[1]
-    extremes[2] = liste[- 2]
-    extremes[3] = liste[- 1]
+    for i in [0, 1, - 2, - 1]:
+        extremes.append(liste[i])
     return extremes
+
+"""
+    >>> mot = Mot('Bonjour')
+    >>> mot.mot
+    'Bonjour'
+    >>> mot.comptelettre('o')
+    2
+"""
+class Mot:
+    def __init__(self, mot):
+        self.mot = str(mot)
+
+
+
+    def comptelettre(self, lettre):
+        self.comptelettre = print(self.mot.count(lettre))
 
 
 def tri_et_inverse(liste):
-    liste_finale = [sorted(liste), reversed(liste)]
+    liste_finale = [sorted(liste), liste[:: - 1]]
     return liste_finale
 
-def aller_a_paris(input_call=input):
 
+def aller_a_paris(input_call=input):
     saisie = input_call('Question ')
     i = 0
     while saisie != 'paris':
           i += 1
           saisie = input_call('Question ')
-
     return i, 'Paris'
+
+
+ville_pays = {"Paris" : False, "Berlin" : False, "Madrid" : False, "Moscou" : True}
+    
+class Pays:
+    def __init__(self, pays, visa):
+        self.nom = pays
+        self.visa = visa
 
 
 ville_nom_pays = {'Paris' : 'France', 'Berlin' : 'Allemagne', 'Madrid' : 'Espagne', 'Moscou' : 'Russie'}
