@@ -74,7 +74,7 @@ def hist(data, x):
     print('\n Graphique enregistré sous le nom : ' + str("Histogramme de la variable ") + x)
 
 
-def realisation(data, choix): # Fonction qui agit en fonction du choix de l'utilisateur
+def loop(data, choix): # Fonction qui agit en fonction du choix de l'utilisateur
     if choix == "1":
       print(data)
     elif choix == "2":
@@ -109,10 +109,10 @@ class fake_input:
 # PARTIE UTILISATEUR
 
 if __name__ == "__main__":
-  fichier = pd.read_csv(input("Entrez le nom du fichier à importer : "), sep = ';')
+  fichier = pd.read_csv(input("Entrez le nom du fichier à importer : "), sep = input("Séparateur : "))
   while True:
     print('\n 1 : Afficher données \n 2 : Étude descriptive \n 3 : Nuage de points \n 4 : Diagramme en barres \n 5 : Diagramme circulaire \n 6 : Histogramme \n Entrez le numéro du choix ou "exit" pour sortir')
     action = while_liste('\n Que voulez-vous faire : ', ["1", "2", "3", "4", "5", "6", "exit"])
     if action == "exit":
       break
-    realisation(fichier, action)
+    loop(fichier, action)
