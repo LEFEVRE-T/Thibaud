@@ -165,7 +165,7 @@ class Mot:
 
 
     def comptelettre(self, lettre):
-        self.comptelettre = print(self.mot.count(lettre))
+        self.comptelettre = print(self.mot.count(lettre.casefold()))
 
 
 def tri_et_inverse(liste):
