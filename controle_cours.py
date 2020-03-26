@@ -157,13 +157,7 @@ def extremites(liste):
         extremes.append(liste[i])
     return extremes
 
-"""
-    >>> mot = Mot('Bonjour')
-    >>> mot.mot
-    'Bonjour'
-    >>> mot.comptelettre('o')
-    2
-"""
+
 class Mot:
     def __init__(self, mot):
         self.mot = str(mot)
