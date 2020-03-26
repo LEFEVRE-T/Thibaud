@@ -12,4 +12,4 @@ Remarques:
 
 - Beaucoup de mes fonctions créent un graphique et je ne pense pas que l'on puisse faire de test pour vérifier que le graphique renvoyé est le bon.
 
-- Les possibilités ne sont pas énormes mais n'ont n'avons jamais appris à faire des études de données avec python(plutôt R et SAS) mais j'ai essayé d'en faire le plus possible sachant que de toute façon il y en a beaucoup ; mais au moins le but du projet est en rapport avec notre domaine d'études.
+- Les possibilités ne sont pas énormes mais nous n'avons jamais appris à faire des études de données avec python(plutôt R et SAS) mais j'ai essayé d'en faire le plus possible sachant que de toute façon il y en a beaucoup ; mais au moins le but du projet est en rapport avec notre domaine d'études.
