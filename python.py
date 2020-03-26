@@ -3,7 +3,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import statistics as st
-import random
+import numpy as np
 import collections
 
 
@@ -93,6 +93,9 @@ def loop(data, choix): # Fonction qui agit en fonction du choix de l'utilisateur
     elif choix == "6":
       variable = while_liste("\n Nom de colonne pour la variable : ", data.columns)
       hist(data, variable)
+    elif choix == "7":
+      nom = input("Nom du fichier : ")
+      data.to_csv(nom, sep = '\t')
     else:
       print("r")
 
@@ -109,10 +112,12 @@ class fake_input:
 # PARTIE UTILISATEUR
 
 if __name__ == "__main__":
-  fichier = pd.read_csv(input("Entrez le nom du fichier à importer : "), sep = input("Séparateur : "))
+  donnees = input("Entrez le nom du fichier à importer : ")
+  separateur = input("Séparateur : ")
+  fichier = pd.read_csv(donnees, sep = separateur)
   while True:
-    print('\n 1 : Afficher données \n 2 : Étude descriptive \n 3 : Nuage de points \n 4 : Diagramme en barres \n 5 : Diagramme circulaire \n 6 : Histogramme \n Entrez le numéro du choix ou "exit" pour sortir')
-    action = while_liste('\n Que voulez-vous faire : ', ["1", "2", "3", "4", "5", "6", "exit"])
+    print('\n 1 : Afficher données \n 2 : Étude descriptive \n 3 : Nuage de points \n 4 : Diagramme en barres \n 5 : Diagramme circulaire \n 6 : Histogramme \n 7 : Exporter données \n Entrez le numéro du choix ou "exit" pour sortir')
+    action = while_liste('\n Que voulez-vous faire : ', ["1", "2", "3", "4", "5", "6", "7", "exit"])
     if action == "exit":
       break
     loop(fichier, action)
