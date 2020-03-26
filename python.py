@@ -9,10 +9,10 @@ import collections
 
 # PARTIE CODE
 
-def while_liste(txt, liste, get_user_input = input, type = str): #Fonction qui permet de ne pas avoir à écrire le while à chaque fois
+def while_liste(txt, liste, type = str, get_user_input = input): #Fonction qui permet de ne pas avoir à écrire le while à chaque fois
     variable = type(get_user_input(txt))
     while variable not in liste:
-      variable = type(get_user_input(txt))
+          variable = type(get_user_input(txt))
     return(variable)
 
 
@@ -74,7 +74,23 @@ def hist(data, x):
     print('\n Graphique enregistré sous le nom : ' + str("Histogramme de la variable ") + x)
 
 
-def loop(data, choix): # Fonction qui agit en fonction du choix de l'utilisateur
+def add_col(data, colonne1, colonne2, new_col, choix):
+    if choix == 1 and colonne1.dtypes == "int64" and colonne2.dtypes == "int64":
+      data[new_col] = colonne1 + colonne2
+    elif choix == 2 and colonne1.dtypes == "int64" and colonne2.dtypes == "int64":
+      data[new_col] = colonne1 - colonne2
+    elif choix == 3 and colonne1.dtypes == "int64" and colonne2.dtypes == "int64":
+      data[new_col] = colonne1 * colonne2
+    elif choix == 4 and colonne1.dtypes == "int64" and colonne2.dtypes == "int64":
+      data[new_col] = colonne1 / colonne2
+    elif choix == 5:
+      data[new_col] = colonne1.map(str) + colonne2.map(str)
+    else:
+      print("\n Choix uniquement possible avec deux variables quantitatives.")
+    return data
+
+
+def realisation(data, choix): # Fonction qui agit en fonction du choix de l'utilisateur
     if choix == "1":
       print(data)
     elif choix == "2":
@@ -94,10 +110,17 @@ def loop(data, choix): # Fonction qui agit en fonction du choix de l'utilisateur
       variable = while_liste("\n Nom de colonne pour la variable : ", data.columns)
       hist(data, variable)
     elif choix == "7":
-      nom = input("Nom du fichier : ")
-      data.to_csv(nom, sep = '\t')
-    else:
-      print("r")
+      print('\n 1 : Somme de colonnes \n 2 : Soustraction de colonnes \n 3 : Multiplication de colonnes \n 4 : Division de colonnes \n 5 : Concaténation de colonnes \n Entrez le numéro du choix')
+      action = while_liste('\n Que voulez-vous faire : ', range(1, 6), int)
+      new_col = input("Nom de la nouvelle colonne : ")
+      colonne1 = while_liste("\n Nom de la première colonne : ", data.columns)
+      colonne2 = while_liste("\n Nom de la deuxième colonne : ", data.columns)
+      print(add_col(data, data[colonne1], data[colonne2], new_col, action))
+    elif choix == "8":
+      nom_fichier = input("Nom du fichier : ")
+      separateur_fichier = input("Séparateur : ")
+      data.to_csv(nom_fichier, sep = separateur_fichier)
+      print("Export fait.")
 
 
 class fake_input:
@@ -116,8 +139,8 @@ if __name__ == "__main__":
   separateur = input("Séparateur : ")
   fichier = pd.read_csv(donnees, sep = separateur)
   while True:
-    print('\n 1 : Afficher données \n 2 : Étude descriptive \n 3 : Nuage de points \n 4 : Diagramme en barres \n 5 : Diagramme circulaire \n 6 : Histogramme \n 7 : Exporter données \n Entrez le numéro du choix ou "exit" pour sortir')
-    action = while_liste('\n Que voulez-vous faire : ', ["1", "2", "3", "4", "5", "6", "7", "exit"])
+    print('\n 1 : Afficher données \n 2 : Étude descriptive \n 3 : Nuage de points \n 4 : Diagramme en barres \n 5 : Diagramme circulaire \n 6 : Histogramme \n 7 : Ajouter colonne \n 8 : Exporter données \n Entrez le numéro du choix ou "exit" pour sortir')
+    action = while_liste('\n Que voulez-vous faire : ', ["1", "2", "3", "4", "5", "6", "7", "8", "exit"])
     if action == "exit":
       break
-    loop(fichier, action)
+    realisation(fichier, action)
